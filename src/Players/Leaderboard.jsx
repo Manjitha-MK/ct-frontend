@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import { motion } from "framer-motion";
+import CoverImg from "../assets/coverimg.jpg";
 
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
@@ -11,136 +12,108 @@ const COLORS = {
 };
 
 const initials = (name = "") =>
-  name.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
+  name
+    .split(" ")
+    .map((w) => w[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
 
-// ───────────────── MEDAL ─────────────────
-const getMedal = (i) => (i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `#${i + 1}`);
+const getMedal = (i) =>
+  i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `#${i + 1}`;
 
-// ───────────────── ROW ─────────────────
+// ───────── ROW ─────────
 const BarRow = ({ rank, player, value, max, accent }) => {
   const pct = Math.max((value / max) * 100, 5);
 
   return (
     <motion.div
-      whileHover={{ scale: 1.01 }}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: 12,
-        padding: "12px",
-        borderRadius: 14,
-        background: "rgba(255,255,255,0.03)",
-        marginBottom: 10,
-        position: "relative",
-        overflow: "hidden",
-      }}
+      whileHover={{ scale: 1.02 }}
+      className="relative flex items-center gap-3 p-3 rounded-xl bg-black/40 backdrop-blur-md overflow-hidden"
     >
-      {/* glow */}
+      {/* progress glow */}
       <div
+        className="absolute left-0 top-0 bottom-0"
         style={{
-          position: "absolute",
-          left: 0,
-          top: 0,
-          bottom: 0,
           width: `${pct}%`,
           background: `${accent}20`,
         }}
       />
 
       {/* rank */}
-      <div style={{ zIndex: 2, minWidth: 40, fontWeight: 700, color: accent }}>
+      <div className="z-10 w-10 font-bold" style={{ color: accent }}>
         {getMedal(rank)}
       </div>
 
       {/* avatar */}
-      <div
-        style={{
-          zIndex: 2,
-          width: 38,
-          height: 38,
-          borderRadius: "50%",
-          background: "#222",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          overflow: "hidden",
-          fontSize: 12,
-        }}
-      >
+      <div className="z-10 w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center overflow-hidden text-xs">
         {player.playerImage ? (
-          <img src={player.playerImage} style={{ width: "100%" }} />
+          <img
+            src={player.playerImage}
+            className="w-full h-full object-cover"
+          />
         ) : (
           initials(player.fullName)
         )}
       </div>
 
-      {/* name */}
-      <div style={{ flex: 1, zIndex: 2 }}>
-        <div style={{ color: "#fff", fontSize: 13 }}>
+      {/* name + bar */}
+      <div className="flex-1 z-10">
+        <div className="text-white text-sm font-medium">
           {player.fullName}
         </div>
 
-        <div style={{ height: 4, background: "#222", borderRadius: 10 }}>
+        <div className="h-1.5 bg-gray-700 rounded-full mt-2">
           <div
+            className="h-full rounded-full"
             style={{
               width: `${pct}%`,
-              height: "100%",
               background: accent,
-              borderRadius: 10,
             }}
           />
         </div>
       </div>
 
       {/* value */}
-      <div style={{ color: accent, fontWeight: 700 }}>
+      <div className="z-10 font-bold" style={{ color: accent }}>
         {value}
       </div>
     </motion.div>
   );
 };
 
-// ───────────────── TABLE ─────────────────
+// ───────── TABLE ─────────
 const TableCard = ({ title, players, keyName, accent }) => {
   const max = useMemo(
-    () => Math.max(...players.map(p => p[keyName] || 0)),
+    () => Math.max(...players.map((p) => p[keyName] || 0), 1),
     [players, keyName]
   );
 
   return (
-    <div
-      style={{
-        minWidth: "100%",
-        flexShrink: 0,
-        padding: 16,
-      }}
-    >
-      <div
-        style={{
-          background: "rgba(255,255,255,0.03)",
-          border: "1px solid rgba(255,255,255,0.06)",
-          borderRadius: 20,
-          padding: 16,
-        }}
-      >
-        <h3 style={{ color: "#fff", marginBottom: 12 }}>{title}</h3>
+    <div className="w-full p-4">
+      <div className="bg-black/50 backdrop-blur-lg border border-white/10 rounded-2xl p-4">
+        <h3 className="text-white text-lg font-semibold mb-4">
+          {title}
+        </h3>
 
-        {players.map((p, i) => (
-          <BarRow
-            key={p._id}
-            rank={i}
-            player={p}
-            value={p[keyName]}
-            max={max}
-            accent={accent}
-          />
-        ))}
+        <div className="space-y-3">
+          {players.map((p, i) => (
+            <BarRow
+              key={p._id}
+              rank={i}
+              player={p}
+              value={p[keyName]}
+              max={max}
+              accent={accent}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
-// ───────────────── MAIN ─────────────────
+// ───────── MAIN ─────────
 export default function Leaderboard() {
   const [runs, setRuns] = useState([]);
   const [wickets, setWickets] = useState([]);
@@ -168,71 +141,49 @@ export default function Leaderboard() {
   }, []);
 
   if (loading) {
-    return <div style={{ color: "#fff", padding: 40 }}>Loading...</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#050c1d] text-white">
+        Loading...
+      </div>
+    );
   }
 
   return (
     <>
-      {/* FIX NAVBAR OVERLAP */}
-      <div style={{ position: "sticky", top: 0, zIndex: 50 }}>
-        <Navbar />
-      </div>
+      <Navbar />
 
+      {/* PAGE BACKGROUND */}
       <div
+        className="min-h-screen text-white pt-24"
         style={{
-          minHeight: "100vh",
-          background: "linear-gradient(160deg,#050c1d,#070f28)",
-          color: "#fff",
-          paddingTop: 90, // 🔥 FIX: prevents navbar overlap
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.85), rgba(5,12,29,0.95)), url(${CoverImg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
         }}
       >
-        {/* HERO */}
-        <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 16px" }}>
-          <h1 style={{ fontSize: 48, fontWeight: 700 }}>
-            LEADER<span style={{ color: COLORS.amber }}>BOARD</span>
+        {/* TITLE */}
+        <div className="max-w-6xl mx-auto px-4">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            LEADER<span className="text-amber-400">BOARD</span>
           </h1>
         </div>
 
-        {/* SPOTLIGHT FIX (STACK ON MOBILE) */}
-        <div
-          style={{
-            maxWidth: 1100,
-            margin: "20px auto",
-            padding: "0 16px",
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-            gap: 16,
-          }}
-        >
-          <div style={{ background: "#111", padding: 16, borderRadius: 16 }}>
+        {/* TOP CARDS */}
+        <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-5">
             🏏 Top Runs
           </div>
-          <div style={{ background: "#111", padding: 16, borderRadius: 16 }}>
+          <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-5">
             🎯 Top Wickets
           </div>
         </div>
 
-        {/* ───────────────── DESKTOP + MOBILE SWIPE ───────────────── */}
-        <div
-          style={{
-            maxWidth: 1100,
-            margin: "0 auto",
-            padding: "0 16px 40px",
-          }}
-        >
-          {/* 🔥 MOBILE SWIPE CONTAINER */}
-          <div
-            style={{
-              display: "flex",
-              overflowX: "auto",
-              gap: 12,
-              scrollSnapType: "x mandatory",
-              WebkitOverflowScrolling: "touch",
-              paddingBottom: 10,
-            }}
-          >
+        {/* TABLES */}
+        <div className="max-w-6xl mx-auto px-4 pb-10">
+          <div className="flex overflow-x-auto gap-4 snap-x snap-mandatory">
             {/* RUNS */}
-            <div style={{ scrollSnapAlign: "start", minWidth: "100%" }}>
+            <div className="min-w-full snap-start">
               <TableCard
                 title="RUN SCORERS"
                 players={runs}
@@ -242,7 +193,7 @@ export default function Leaderboard() {
             </div>
 
             {/* WICKETS */}
-            <div style={{ scrollSnapAlign: "start", minWidth: "100%" }}>
+            <div className="min-w-full snap-start">
               <TableCard
                 title="WICKET TAKERS"
                 players={wickets}
@@ -251,16 +202,6 @@ export default function Leaderboard() {
               />
             </div>
           </div>
-
-          {/* 🖥 DESKTOP GRID (hidden feel via layout) */}
-          <div
-            style={{
-              display: "none",
-              gap: 20,
-              gridTemplateColumns: "1fr 1fr",
-            }}
-            className="desktop-grid"
-          />
         </div>
       </div>
     </>
