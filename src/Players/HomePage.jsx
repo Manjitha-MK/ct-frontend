@@ -5,6 +5,7 @@ import CoverImg from "../assets/coverimg.jpg";
 import winImg from "../assets/win.webp";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
+import CTASection from "../components/CTASectuion";
 
 const Homepage = () => {
   return (
@@ -100,6 +101,7 @@ const Homepage = () => {
           </button>
         </div>
       </section>
+      <CTASection />
       <Footer />
     </div>
   );
