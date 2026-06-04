@@ -4,6 +4,7 @@ import { FaTrophy, FaUsers, FaChartLine, FaMedal } from "react-icons/fa";
 import CoverImg from "../assets/coverimg.jpg";
 import winImg from "../assets/win.webp";
 import { Link } from "react-router-dom";
+import Footer from "../components/Footer";
 
 const Homepage = () => {
   return (
@@ -95,6 +96,7 @@ const Homepage = () => {
         </div>
 
       </section>
+      <Footer />
     </div>
   );
 };
