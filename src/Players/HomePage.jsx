@@ -2,6 +2,8 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import { FaTrophy, FaUsers, FaChartLine, FaMedal } from "react-icons/fa";
 import CoverImg from "../assets/coverimg.jpg";
+import winImg from "../assets/win.webp";
+import { Link } from "react-router-dom";
 
 const Homepage = () => {
   return (
@@ -50,9 +52,9 @@ const Homepage = () => {
                 Explore Team
               </button>
 
-              <button className="w-full sm:w-auto border-2 border-gray-700 hover:border-amber-500 text-gray-300 hover:text-amber-400 bg-black/20 backdrop-blur-sm px-8 py-3.5 font-black text-xs tracking-wider uppercase rounded-xl transition-all duration-300 active:scale-[0.98]">
+              <Link to="/matches" className="w-full sm:w-auto border-2 border-gray-700 hover:border-amber-500 text-gray-300 hover:text-amber-400 bg-black/20 backdrop-blur-sm px-8 py-3.5 font-black text-xs tracking-wider uppercase rounded-xl transition-all duration-300 active:scale-[0.98]">
                 View Matches
-              </button>
+              </Link>
             </div>
 
           </div>
@@ -65,7 +67,7 @@ const Homepage = () => {
         {/* Left Side: Image Container */}
         <div className="w-full md:w-1/2 group overflow-hidden rounded-2xl border border-amber-500/10 shadow-2xl shadow-black">
           <img
-            src="/team.jpg"
+            src={winImg}
             alt="Thambilideniya Aura Squad"
             className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-102"
           />
