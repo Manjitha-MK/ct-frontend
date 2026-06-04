@@ -49,7 +49,7 @@ const BarRow = ({ rank, player, value, max, accent }) => {
       <div className="z-10 w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center overflow-hidden text-xs">
         {player.playerImage ? (
           <img
-            src={player.playerImage}
+            src={player.playerImage?.url}
             className="w-full h-full object-cover"
           />
         ) : (
