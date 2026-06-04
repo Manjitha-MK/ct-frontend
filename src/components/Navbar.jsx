@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   FiMenu,
   FiX,
@@ -12,6 +13,7 @@ import {
   FiUsers,
   FiCalendar,
 } from "react-icons/fi";
+
 import Logo from "../assets/logo.png";
 import { AuthContext } from "../context/AuthContext";
 
@@ -19,19 +21,7 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-
   const { user, logout } = useContext(AuthContext);
-
-  const handleLogin = () => {
-    setOpen(false);
-    navigate("/login");
-  };
-
-  const handleLogout = () => {
-    logout();
-    setOpen(false);
-    navigate("/");
-  };
 
   const navLinks = [
     { name: "HOME", path: "/", icon: <FiHome /> },
@@ -44,40 +34,55 @@ const Navbar = () => {
 
   const isActive = (path) => location.pathname === path;
 
+  const handleLogin = () => {
+    setOpen(false);
+    navigate("/login");
+  };
+
+  const handleLogout = () => {
+    logout();
+    setOpen(false);
+    navigate("/");
+  };
+
   return (
     <nav className="fixed top-0 left-0 w-full z-50">
-      {/* GLASS NAVBAR */}
+      {/* TOP BAR */}
       <div className="backdrop-blur-xl bg-[#071427]/80 border-b border-amber-500/20">
-        <div className="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-6 lg:px-8 py-3">
+        <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
 
           {/* LOGO */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <img
-              src={Logo}
-              className="w-9 h-9 sm:w-10 sm:h-10 group-hover:scale-110 transition"
-              alt="logo"
-            />
-            <div className="leading-tight">
-              <h1 className="text-white font-black tracking-widest text-sm sm:text-base">
+          <Link to="/" className="flex items-center gap-3">
+            <img src={Logo} className="w-10 h-10" alt="logo" />
+            <div>
+              <h1 className="text-white font-black text-sm">
                 AURA <span className="text-amber-400">CRICKET</span>
               </h1>
-              <p className="text-[10px] text-gray-400 tracking-widest">
+              <p className="text-[10px] text-gray-400">
                 ONE TEAM • ONE DREAM
               </p>
             </div>
           </Link>
 
-          {/* DESKTOP NAV */}
-          <ul className="hidden md:flex items-center gap-2 lg:gap-3">
+          {/* MENU BUTTON */}
+          <button
+            onClick={() => setOpen(true)}
+            className="md:hidden text-white text-2xl"
+          >
+            <FiMenu />
+          </button>
+
+          {/* DESKTOP LINKS */}
+          <ul className="hidden md:flex gap-3">
             {navLinks.map((link) => (
               <li key={link.name}>
                 <Link
                   to={link.path}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-[11px] font-bold tracking-wider transition-all duration-300
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition
                   ${
                     isActive(link.path)
-                      ? "bg-amber-500 text-black shadow-lg shadow-amber-500/20"
-                      : "text-gray-300 hover:text-amber-400 hover:bg-white/5"
+                      ? "bg-amber-500 text-black"
+                      : "text-gray-300 hover:text-amber-400"
                   }`}
                 >
                   {link.icon}
@@ -87,122 +92,120 @@ const Navbar = () => {
             ))}
           </ul>
 
-          {/* AUTH SECTION */}
-          <div className="hidden md:flex items-center gap-3">
+          {/* AUTH */}
+          <div className="hidden md:block">
             {user ? (
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-white/5 border border-amber-500/20">
-                  <div className="w-7 h-7 rounded-full bg-amber-500 flex items-center justify-center text-black font-black">
-                    {user?.name?.charAt(0) || "P"}
-                  </div>
-                  <span className="text-xs text-white font-semibold max-w-[120px] truncate">
-                    {user?.name || "Player"}
-                  </span>
-                </div>
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 text-red-400 text-xs"
+              >
+                <FiLogOut /> Logout
+              </button>
+            ) : (
+              <button
+                onClick={handleLogin}
+                className="flex items-center gap-2 bg-amber-500 text-black px-4 py-2 rounded-full text-xs font-bold"
+              >
+                <FiUser /> LOGIN
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
 
-                <button
-                  onClick={handleLogout}
-                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition text-xs font-bold"
-                >
-                  <FiLogOut />
-                  Logout
+      {/* BACKDROP */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm md:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* NETFLIX STYLE DRAWER */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            drag="x"
+            dragDirectionLock
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.2}
+            onDragEnd={(e, info) => {
+              if (info.offset.x > 120) setOpen(false);
+            }}
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", stiffness: 260, damping: 25 }}
+            className="fixed top-0 right-0 h-full w-[80%] bg-[#071427]/30 border-l border-amber-500/20 shadow-2xl md:hidden"
+          >
+            <div className="p-6 flex flex-col h-full">
+
+              {/* HEADER */}
+              <div className="flex justify-between items-center mb-8">
+                <h2 className="text-amber-400 font-black tracking-widest">
+                  MENU
+                </h2>
+
+                <button onClick={() => setOpen(false)}>
+                  <FiX className="text-white text-xl" />
                 </button>
               </div>
-            ) : (
-              <button
-                onClick={handleLogin}
-                className="flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-amber-500 to-amber-400 text-black font-black text-xs hover:scale-105 transition shadow-lg shadow-amber-500/20"
-              >
-                <FiUser />
-                LOGIN
-              </button>
-            )}
-          </div>
 
-          {/* MOBILE BUTTON */}
-          <button
-            onClick={() => setOpen(!open)}
-            className="md:hidden text-white text-2xl"
-          >
-            {open ? <FiX className="text-amber-400" /> : <FiMenu />}
-          </button>
-        </div>
-      </div>
+              {/* LINKS (STAGGER ANIMATION) */}
+              <div className="flex flex-col gap-2">
+                {navLinks.map((link, i) => (
+                  <motion.div
+                    key={link.name}
+                    initial={{ opacity: 0, x: 40 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                  >
+                    <Link
+                      to={link.path}
+                      onClick={() => setOpen(false)}
+                      className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition
+                      ${
+                        isActive(link.path)
+                          ? "bg-amber-500 text-black"
+                          : "text-gray-300 hover:bg-white/5"
+                      }`}
+                    >
+                      {link.icon}
+                      {link.name}
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
 
-      {/* MOBILE MENU (SLIDE STYLE) */}
-      <div
-        className={`md:hidden fixed top-0 right-0 h-full w-[78%] bg-[#071427] border-l border-amber-500/20 shadow-2xl transform transition-transform duration-300 ${
-          open ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        <div className="p-6 flex flex-col h-full">
-
-          {/* HEADER */}
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-amber-400 font-black tracking-widest">
-              MENU
-            </h2>
-            <button onClick={() => setOpen(false)}>
-              <FiX className="text-white text-xl" />
-            </button>
-          </div>
-
-          {/* LINKS */}
-          <div className="flex flex-col gap-2">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.path}
-                onClick={() => setOpen(false)}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition
-                ${
-                  isActive(link.path)
-                    ? "bg-amber-500 text-black"
-                    : "text-gray-300 hover:bg-white/5"
-                }`}
-              >
-                {link.icon}
-                {link.name}
-              </Link>
-            ))}
-          </div>
-
-          {/* AUTH */}
-          <div className="mt-auto pt-6 border-t border-white/10">
-            {user ? (
-              <>
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 bg-amber-500 text-black rounded-full flex items-center justify-center font-black">
-                    {user?.name?.charAt(0) || "P"}
-                  </div>
-                  <div>
-                    <p className="text-white text-sm font-bold">
-                      {user?.name || "Player"}
-                    </p>
-                    <p className="text-xs text-amber-400">SQUAD MEMBER</p>
-                  </div>
-                </div>
-
-                <button
-                  onClick={handleLogout}
-                  className="w-full py-3 rounded-xl bg-red-500 text-white font-bold flex items-center justify-center gap-2"
-                >
-                  <FiLogOut />
-                  Logout
-                </button>
-              </>
-            ) : (
-              <button
-                onClick={handleLogin}
-                className="w-full py-3 rounded-xl bg-amber-500 text-black font-black flex items-center justify-center gap-2"
-              >
-                <FiUser />
-                LOGIN
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
+              {/* AUTH */}
+              <div className="mt-auto pt-6 border-t border-white/10">
+                {user ? (
+                  <button
+                    onClick={handleLogout}
+                    className="w-full py-3 rounded-xl bg-red-500 text-white font-bold"
+                  >
+                    <FiLogOut className="inline mr-2" />
+                    Logout
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleLogin}
+                    className="w-full py-3 rounded-xl bg-amber-500 text-black font-black"
+                  >
+                    <FiUser className="inline mr-2" />
+                    LOGIN
+                  </button>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };
