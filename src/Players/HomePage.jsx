@@ -48,9 +48,9 @@ const Homepage = () => {
 
             {/* Responsive UI Action Buttons */}
             <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start">
-              <button className="w-full sm:w-auto bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 px-8 py-3.5 font-black text-xs tracking-wider uppercase rounded-xl transition-all duration-300 shadow-lg shadow-amber-500/10 active:scale-[0.98]">
+              <Link to="/players" className="w-full sm:w-auto bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 px-8 py-3.5 font-black text-xs tracking-wider uppercase rounded-xl transition-all duration-300 shadow-lg shadow-amber-500/10 active:scale-[0.98]">
                 Explore Team
-              </button>
+              </Link>
 
               <Link to="/matches" className="w-full sm:w-auto border-2 border-gray-700 hover:border-amber-500 text-gray-300 hover:text-amber-400 bg-black/20 backdrop-blur-sm px-8 py-3.5 font-black text-xs tracking-wider uppercase rounded-xl transition-all duration-300 active:scale-[0.98]">
                 View Matches
