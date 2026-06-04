@@ -1,4 +1,5 @@
 import React from "react";
+import {useState} from "react";
 import Navbar from "../components/Navbar";
 import CoverImg from "../assets/coverimg.jpg";
 import winImg from "../assets/win.webp";
@@ -7,6 +8,7 @@ import Footer from "../components/Footer";
 import CTASection from "../components/CTASectuion";
 
 const Homepage = () => {
+  const [showMore, setShowMore] = useState(false);
   return (
     <div className="bg-[#050b18] text-white min-h-screen font-sans overflow-x-hidden">
       <Navbar />
@@ -95,8 +97,22 @@ const Homepage = () => {
             global greatness.
           </p>
 
-          <button className="mt-6 sm:mt-8 border border-amber-500/30 hover:bg-amber-500 text-amber-400 hover:text-black px-6 sm:px-8 py-2.5 rounded-xl text-xs font-black tracking-wider uppercase transition-all duration-300 active:scale-[0.98]">
-            READ MORE
+          {/* EXTRA CONTENT (HIDDEN / SHOWN) */}
+          {showMore && (
+            <p className="text-gray-400 mt-4 text-xs sm:text-sm lg:text-base leading-relaxed">
+              Every player in Aura represents discipline and passion. We train
+              hard, play smart, and respect the game. Our mission is not only to
+              win matches but also to build future champions from our village.
+              Through teamwork, dedication, and spirit, we aim to become one of
+              the strongest local cricket teams in Sri Lanka.
+            </p>
+          )}
+
+          <button 
+            className="mt-6 sm:mt-8 border border-amber-500/30 hover:bg-amber-500 text-amber-400 hover:text-black px-6 sm:px-8 py-2.5 rounded-xl text-xs font-black tracking-wider uppercase transition-all duration-300 active:scale-[0.98]"
+            onClick={() => setShowMore(!showMore)}
+          >
+            {showMore ? "READ LESS" : "READ MORE"}
           </button>
         </div>
       </section>
