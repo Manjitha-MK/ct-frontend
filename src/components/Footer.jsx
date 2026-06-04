@@ -75,7 +75,7 @@ const Footer = () => {
           </p>
 
           <a
-            href="https://facebook.com"
+            href="https://www.facebook.com/share/14iZnZUFNrY/"
             target="_blank"
             rel="noreferrer"
             className="flex items-center gap-3 bg-white/5 hover:bg-amber-500/10 border border-white/10 hover:border-amber-500/30 px-4 py-3 rounded-xl transition"
