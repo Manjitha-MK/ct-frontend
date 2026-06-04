@@ -150,7 +150,7 @@ export default function PlayersPage() {
                 <div className="w-20 h-20 rounded-full overflow-hidden border border-yellow-500/40">
                   {captain.playerImage ? (
                     <img
-                      src={captain.playerImage}
+                      src={captain.playerImage?.url}
                       className="w-full h-full object-cover"
                     />
                   ) : (
@@ -187,7 +187,7 @@ export default function PlayersPage() {
                 <div className="w-20 h-20 rounded-full overflow-hidden border border-blue-500/40">
                   {viceCaptain.playerImage ? (
                     <img
-                      src={viceCaptain.playerImage}
+                      src={viceCaptain.playerImage?.url}
                       className="w-full h-full object-cover"
                     />
                   ) : (
@@ -272,7 +272,7 @@ export default function PlayersPage() {
                   <div className="w-16 h-16 mx-auto rounded-full overflow-hidden border border-white/10 mt-4">
                     {p.playerImage ? (
                       <img
-                        src={p.playerImage}
+                        src={p.playerImage?.url}
                         className="w-full h-full object-cover"
                       />
                     ) : (
