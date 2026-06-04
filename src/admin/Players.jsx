@@ -34,6 +34,8 @@ const Players = () => {
     fetchPlayers();
   }, []);
 
+  const formRef = useRef(null);
+
   // ================= SUBMIT =================
   const handleSubmit = async () => {
     try {
@@ -124,8 +126,11 @@ const Players = () => {
     setImage(null);
 
     if (fileInputRef.current) fileInputRef.current.value = "";
+
+    formRef.current.scrollIntoView({ behavior: "smooth" });
     console.log("EDIT PLAYER:", p);
   };
+
 
   return (
     <AdminLayout>
@@ -133,7 +138,7 @@ const Players = () => {
         <h1 className="text-2xl font-bold">Players Management</h1>
 
         {/* ================= FORM ================= */}
-        <div className="bg-white p-4 rounded-xl shadow flex flex-wrap gap-3">
+        <div ref={formRef} className="bg-white p-4 rounded-xl shadow flex flex-wrap gap-3">
           <input
             className="input"
             placeholder="Name"
@@ -195,6 +200,24 @@ const Players = () => {
             value={jerseyNumber}
             onChange={(e) => setJerseyNumber(e.target.value)}
           />
+          <input
+            className="input"
+            placeholder="Total runs"
+            value={totalRuns}
+            onChange={(e) => setTotalRuns(e.target.value)}
+          />
+          <input
+            className="input"
+            placeholder="Total wickets"
+            value={totalWickets}
+            onChange={(e) => setTotalWickets(e.target.value)}
+          />
+          <input
+            className="input"
+            placeholder="Matches Played"
+            value={matchesPlayed}
+            onChange={(e) => setMatchesPlayed(e.target.value)}
+          />
 
           {/* 🧢 Captain */}
           <label className="flex items-center gap-2">
@@ -255,13 +278,15 @@ const Players = () => {
                   Runs: {p.totalRuns} | Wkts: {p.totalWickets}
                 </p>
                 <p className="text-sm text-gray-600">
-                  DOB: {p.dateOfBirth ? new Date(p.dateOfBirth).toLocaleDateString() : "N/A"}
+                  DOB:{" "}
+                  {p.dateOfBirth
+                    ? new Date(p.dateOfBirth).toLocaleDateString()
+                    : "N/A"}
                 </p>
-
               </div>
 
               <img
-                src={p.playerImage}
+                src={p.playerImage?.url}
                 className="w-14 h-14 rounded-full object-cover"
               />
 
