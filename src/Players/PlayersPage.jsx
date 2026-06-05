@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
-import PlayerModal from "../components/Modal";
+import PlayerModal from "../components/PlayerModal";
 import Navbar from "../components/Navbar";
 import PlayerImg from "../assets/playerimg.jpg"
 import { motion, AnimatePresence } from "framer-motion";
