@@ -273,6 +273,9 @@ const Players = () => {
                   Batting: {p.battingStyle || "N/A"} | Bowling:{" "}
                   {p.bowlingStyle || "N/A"}
                 </p>
+                <p className="text-sm text-gray-600">
+                  Matches: {p.matchesPlayed}
+                </p>
 
                 <p className="text-sm">
                   Runs: {p.totalRuns} | Wkts: {p.totalWickets}
