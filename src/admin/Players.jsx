@@ -131,119 +131,160 @@ const Players = () => {
     console.log("EDIT PLAYER:", p);
   };
 
-
   return (
     <AdminLayout>
       <div className="p-6 space-y-6">
         <h1 className="text-2xl font-bold">Players Management</h1>
 
         {/* ================= FORM ================= */}
-        <div ref={formRef} className="bg-white p-4 rounded-xl shadow flex flex-wrap gap-3">
-          <input
-            className="input"
-            placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+        <div
+          ref={formRef}
+          className="bg-white p-4 rounded-xl shadow flex flex-wrap gap-4"
+        >
+          {/* Name */}
+          <div className="flex flex-col">
+            <label className="text-sm font-medium text-gray-600">Name</label>
+            <input
+              className="input border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
 
-          <select
-            className="input"
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-          >
-            <option value="">Role</option>
-            <option>Batsman</option>
-            <option>Bowler</option>
-            <option>All-Rounder</option>
-            <option>Wicketkeeper</option>
-          </select>
+          {/* Role */}
+          <div className="flex flex-col">
+            <select
+              className="input"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+            >
+              <option value="">Role</option>
+              <option>Batsman</option>
+              <option>Bowler</option>
+              <option>All-Rounder</option>
+              <option>Wicketkeeper</option>
+            </select>
+          </div>
 
-          <select
-            className="input"
-            value={battingStyle}
-            onChange={(e) => setBattingStyle(e.target.value)}
-          >
-            <option value="">Batting Style</option>
-            <option>Right Handed</option>
-            <option>Left Handed</option>
-          </select>
+          {/* Batting Style */}
+          <div className="flex flex-col">
+            <select
+              className="input"
+              value={battingStyle}
+              onChange={(e) => setBattingStyle(e.target.value)}
+            >
+              <option value="">Batting Style</option>
+              <option>Right Handed</option>
+              <option>Left Handed</option>
+            </select>
+          </div>
 
-          <select
-            className="input"
-            value={bowlingStyle}
-            onChange={(e) => setBowlingStyle(e.target.value)}
-          >
-            <option value="">Bowling Style</option>
-            <option>Fast</option>
-            <option>Spin</option>
-            <option>Medium Fast</option>
-          </select>
+          {/* Bowling Style */}
+          <div className="flex flex-col">
+            <select
+              className="input"
+              value={bowlingStyle}
+              onChange={(e) => setBowlingStyle(e.target.value)}
+            >
+              <option value="">Bowling Style</option>
+              <option>Fast</option>
+              <option>Spin</option>
+              <option>Medium Fast</option>
+            </select>
+          </div>
 
-          <input
-            className="input"
-            placeholder="Age"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-          />
+          {/* Age */}
+          <div className="flex flex-col">
+            <label className="text-sm font-medium text-gray-600">Age</label>
+            <input
+              className="input border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+            />
+          </div>
 
-          {/* 🎂 DOB */}
-          <input
-            type="date"
-            className="input"
-            value={dob}
-            onChange={(e) => setDob(e.target.value)}
-          />
+          {/* DOB */}
+          <div className="flex flex-col">
+            <label className="text-sm font-medium text-gray-600">DOB</label>
+            <input
+              type="date"
+              className="input"
+              value={dob}
+              onChange={(e) => setDob(e.target.value)}
+            />
+          </div>
 
-          <input
-            className="input"
-            placeholder="Jersey No"
-            value={jerseyNumber}
-            onChange={(e) => setJerseyNumber(e.target.value)}
-          />
-          <input
-            className="input"
-            placeholder="Total runs"
-            value={totalRuns}
-            onChange={(e) => setTotalRuns(e.target.value)}
-          />
-          <input
-            className="input"
-            placeholder="Total wickets"
-            value={totalWickets}
-            onChange={(e) => setTotalWickets(e.target.value)}
-          />
-          <input
-            className="input"
-            placeholder="Matches Played"
-            value={matchesPlayed}
-            onChange={(e) => setMatchesPlayed(e.target.value)}
-          />
+          {/* Jersey */}
+          <div className="flex flex-col">
+            <label className="text-sm font-medium text-gray-600">
+              Jersey No
+            </label>
+            <input
+              className="input border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              value={jerseyNumber}
+              onChange={(e) => setJerseyNumber(e.target.value)}
+            />
+          </div>
 
-          {/* 🧢 Captain */}
-          <label className="flex items-center gap-2">
+          {/* Matches */}
+          <div className="flex flex-col">
+            <label className="text-sm font-medium text-gray-600">Matches</label>
+            <input
+              className="input border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              value={matchesPlayed}
+              onChange={(e) => setMatchesPlayed(e.target.value)}
+            />
+          </div>
+
+          {/* Runs */}
+          <div className="flex flex-col">
+            <label className="text-sm font-medium text-gray-600">Runs</label>
+            <input
+              className="input border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              value={totalRuns}
+              onChange={(e) => setTotalRuns(e.target.value)}
+            />
+          </div>
+
+          {/* Wickets */}
+          <div className="flex flex-col">
+            <label className="text-sm font-medium text-gray-600">Wickets</label>
+            <input
+              className="input border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              value={totalWickets}
+              onChange={(e) => setTotalWickets(e.target.value)}
+            />
+          </div>
+
+          {/* Captain */}
+          <label className="flex items-center gap-2 mt-2">
             <input
               type="checkbox"
               checked={isCaptain}
               onChange={(e) => setIsCaptain(e.target.checked)}
             />
-            Captain
+            Captain 🧢
           </label>
 
-          {/* ⭐ Vice Captain */}
-          <label className="flex items-center gap-2">
+          {/* Vice Captain */}
+          <label className="flex items-center gap-2 mt-2">
             <input
               type="checkbox"
               checked={isViceCaptain}
               onChange={(e) => setIsViceCaptain(e.target.checked)}
             />
-            Vice Captain
+            Vice Captain ⭐
           </label>
 
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={(e) => setImage(e.target.files[0])}
-          />
+          {/* Image */}
+          <div className="flex flex-col">
+            <label className="text-sm font-medium text-gray-600">Image</label>
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={(e) => setImage(e.target.files[0])}
+            />
+          </div>
 
           <button
             onClick={handleSubmit}
