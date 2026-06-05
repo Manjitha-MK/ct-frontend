@@ -96,6 +96,8 @@ const Footer = () => {
             © {new Date().getFullYear()} AURA Cricket Team. All rights reserved.
           </p>
 
+          <div className="text-xs text-gray-500 text-center">Development by MK</div>
+
           <div className="flex items-center gap-4 text-xs text-gray-500">
             <span className="flex items-center gap-1">
               <FaTrophy /> Cricket Club
