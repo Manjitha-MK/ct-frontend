@@ -272,7 +272,7 @@ export default function PlayersPage() {
                   <div className="w-16 h-16 mx-auto rounded-full overflow-hidden border border-white/10 mt-4">
                     {p.playerImage ? (
                       <img
-                        src={p.playerImage?.url}
+                        src={p.playerImage?.url || p.playerImage}
                         className="w-full h-full object-cover"
                       />
                     ) : (
