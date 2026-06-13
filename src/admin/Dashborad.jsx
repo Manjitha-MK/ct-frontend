@@ -11,10 +11,12 @@ const Dashboard = () => {
     totalWins: 0,
     totalLosses: 0,
   });
-
+  const API = import.meta.env.VITE_API_URL;
   const fetchDashboardStats = async () => {
     try {
-      const res = await axios.get("import.meta.env.VITE_API_URL/api/dashboard");
+      const res = await axios.get(`${API}/api/dashboard`);
+      console.log("API:", import.meta.env.VITE_API_URL);
+      console.log("Response:", res.data);
       setStats(res.data);
     } catch (error) {
       console.log(error);
