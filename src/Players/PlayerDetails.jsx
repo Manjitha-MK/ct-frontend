@@ -12,7 +12,7 @@ const PlayerDetails = () => {
   useEffect(() => {
     const fetchPlayer = async () => {
       const res = await axios.get(
-        `http://localhost:5000/api/players/${id}`
+        `import.meta.env.VITE_API_URL/api/players/${id}`
       );
       setPlayer(res.data);
     };
@@ -43,7 +43,7 @@ const PlayerDetails = () => {
       <div className="p-6 max-h-[80vh] overflow-y-auto">
         <div className="flex flex-col md:flex-row gap-6">
           <img
-            src={`http://localhost:5000/uploads/${player.playerImage}`}
+            src={`import.meta.env.VITE_API_URL/uploads/${player.playerImage}`}
             className="w-40 h-40 rounded-2xl object-cover"
           />
 

@@ -26,7 +26,7 @@ const Players = () => {
   const fileInputRef = useRef(null);
 
   const fetchPlayers = async () => {
-    const res = await axios.get("http://localhost:5000/api/players");
+    const res = await axios.get("import.meta.env.VITE_API_URL/api/players");
     setPlayers(res.data);
   };
 
@@ -63,13 +63,13 @@ const Players = () => {
 
       if (editId) {
         res = await axios.put(
-          `http://localhost:5000/api/players/${editId}`,
+          `import.meta.env.VITE_API_URL/api/players/${editId}`,
           formData,
           { headers: { "Content-Type": "multipart/form-data" } },
         );
         alert("Player Updated");
       } else {
-        res = await axios.post("http://localhost:5000/api/players", formData, {
+        res = await axios.post("import.meta.env.VITE_API_URL/api/players", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         alert("Player Added");
@@ -101,7 +101,7 @@ const Players = () => {
 
   // ================= DELETE =================
   const deletePlayer = async (id) => {
-    await axios.delete(`http://localhost:5000/api/players/${id}`);
+    await axios.delete(`import.meta.env.VITE_API_URL/api/players/${id}`);
     fetchPlayers();
   };
 

@@ -16,7 +16,7 @@ const Gallery = () => {
   // ---------------- FETCH IMAGES ----------------
   const fetchImages = async () => {
     const res = await axios.get(
-      "http://localhost:5000/api/gallery"
+      "import.meta.env.VITE_API_URL/api/gallery"
     );
     setImages(res.data);
   };
@@ -37,7 +37,7 @@ const Gallery = () => {
     formData.append("image", image);
 
     await axios.post(
-      "http://localhost:5000/api/gallery",
+      "import.meta.env.VITE_API_URL/api/gallery",
       formData
     );
 
@@ -58,7 +58,7 @@ const Gallery = () => {
   // ---------------- DELETE ----------------
   const deleteImage = async (id) => {
     await axios.delete(
-      `http://localhost:5000/api/gallery/${id}`
+      `import.meta.env.VITE_API_URL/api/gallery/${id}`
     );
 
     fetchImages();

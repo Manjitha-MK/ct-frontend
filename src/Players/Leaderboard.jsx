@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 import { motion } from "framer-motion";
 import CoverImg from "../assets/coverimg.jpg";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_BASE = import.meta.env.VITE_API_URL || "import.meta.env.VITE_API_URL";
 
 const COLORS = {
   amber: "#F59E0B",
