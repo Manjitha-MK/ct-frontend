@@ -57,21 +57,6 @@ const Dashboard = () => {
         {/* Analytics */}
         {stats && <Analytics stats={stats} />}
 
-        {/* Recent Matches */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="bg-white p-5 rounded shadow"
-        >
-          <h2 className="text-xl font-bold mb-4">Recent Matches</h2>
-
-          <ul className="space-y-3 text-gray-700">
-            <li>RCB vs CSK - Win</li>
-            <li>MI vs KKR - Loss</li>
-            <li>SRH vs RR - Win</li>
-          </ul>
-        </motion.div>
       </div>
     </AdminLayout>
   );
