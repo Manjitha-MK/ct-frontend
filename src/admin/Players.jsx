@@ -24,9 +24,10 @@ const Players = () => {
   const [editId, setEditId] = useState(null);
 
   const fileInputRef = useRef(null);
+  const API = import.meta.env.VITE_API_URL;
 
   const fetchPlayers = async () => {
-    const res = await axios.get("import.meta.env.VITE_API_URL/api/players");
+    const res = await axios.get(`${API}/api/players`);
     setPlayers(res.data);
   };
 
@@ -63,13 +64,13 @@ const Players = () => {
 
       if (editId) {
         res = await axios.put(
-          `import.meta.env.VITE_API_URL/api/players/${editId}`,
+          `${API}/api/players/${editId}`,
           formData,
           { headers: { "Content-Type": "multipart/form-data" } },
         );
         alert("Player Updated");
       } else {
-        res = await axios.post("import.meta.env.VITE_API_URL/api/players", formData, {
+        res = await axios.post(`${API}/api/players`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         alert("Player Added");
@@ -101,7 +102,7 @@ const Players = () => {
 
   // ================= DELETE =================
   const deletePlayer = async (id) => {
-    await axios.delete(`import.meta.env.VITE_API_URL/api/players/${id}`);
+    await axios.delete(`${API}/api/players/${id}`);
     fetchPlayers();
   };
 

@@ -12,11 +12,12 @@ const Gallery = () => {
   const [currentIndex, setCurrentIndex] = useState(null);
 
   const fileInputRef = useRef(null);
+  const API = import.meta.env.VITE_API_URL;
 
   // ---------------- FETCH IMAGES ----------------
   const fetchImages = async () => {
     const res = await axios.get(
-      "import.meta.env.VITE_API_URL/api/gallery"
+      `${API}/api/gallery`
     );
     setImages(res.data);
   };
@@ -37,7 +38,7 @@ const Gallery = () => {
     formData.append("image", image);
 
     await axios.post(
-      "import.meta.env.VITE_API_URL/api/gallery",
+      `${API}/api/gallery`,
       formData
     );
 

@@ -16,12 +16,12 @@ const Matches = () => {
 
   const [editId, setEditId] = useState(null);
 
-  const API_URL = "import.meta.env.VITE_API_URL/api/matches";
+  const API = import.meta.env.VITE_API_URL;
 
   // GET MATCHES
   const fetchMatches = async () => {
     try {
-      const res = await axios.get(API_URL);
+      const res = await axios.get(`${API}/api/matches`);
       setMatches(res.data);
     } catch (error) {
       console.error("Error fetching matches:", error);
@@ -61,9 +61,9 @@ const Matches = () => {
 
     try {
       if (editId) {
-        await axios.put(`${API_URL}/${editId}`, matchData);
+        await axios.put(`${API}/api/matches/${editId}`, matchData);
       } else {
-        await axios.post(API_URL, matchData);
+        await axios.post(`${API}/api/matches`, matchData);
       }
       resetForm();
       fetchMatches();
@@ -76,7 +76,7 @@ const Matches = () => {
   const deleteMatch = async (id) => {
     if (window.confirm("Are you sure you want to delete this match?")) {
       try {
-        await axios.delete(`${API_URL}/${id}`);
+        await axios.delete(`${API}/api/matches/${id}`);
         fetchMatches();
       } catch (error) {
         console.error("Error deleting match:", error);
